@@ -1,6 +1,7 @@
 # ninja log v5
-4	1008	7253858410823073	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
-1008	1654	7253858417165443	project.exe	76e79aeada6cc099
-12	1055	7253875623413608	CMakeFiles/project.dir/scripts/Paddle.cpp.obj	34517c1f4123c7ae
-5	1129	7253875624149887	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
-1130	2116	7253875633918133	project.exe	ef6f6a057095a296
+5	1016	7254958191293954	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+1019	1624	7254953599244721	project.exe	ef6f6a057095a296
+28	5841	7254944867812901	CMakeFiles/project.dir/scripts/Paddle.cpp.obj	34517c1f4123c7ae
+10	854	7254958373243051	CMakeFiles/project.dir/scripts/GameBackGround.cpp.obj	55721b0d579a8151
+4	941	7254958374104545	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+942	1581	7254958380394637	project.exe	112ddd1a3623bc0d

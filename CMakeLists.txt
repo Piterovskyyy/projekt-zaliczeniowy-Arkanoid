@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(project main.cpp
         scripts/Paddle.cpp
-        scripts/Paddle.h)
+        scripts/Paddle.h
+        scripts/GameBackGround.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)

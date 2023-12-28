@@ -5,4 +5,5 @@ using namespace sf;
 class PaddleClass {
 public:
     RectangleShape drawPaddle(Texture &paddle);
+
 };

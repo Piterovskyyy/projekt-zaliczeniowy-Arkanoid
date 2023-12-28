@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include "scripts/Paddle.h"
+#include "scripts/GameBackGround.h"
 using namespace std;
 using namespace sf;
 int main() {
@@ -10,8 +11,8 @@ int main() {
     bool play = true;
 
     Event event;
-    Texture gameBackground;
-    if(gameBackground.loadFromFile("../images/spritessheet.png",  IntRect(0,33,800,450)) == -1){
+    Texture gameBackgroundTexture;
+    if(gameBackgroundTexture.loadFromFile("../images/spritessheet.png",  IntRect(0,33,800,450)) == -1){
         return 1;
 
     }
@@ -20,16 +21,15 @@ int main() {
         return 1;
 
     }
-    RectangleShape backgroundRect;
-    backgroundRect.setSize(Vector2f (640, 480));
-    backgroundRect.setPosition(0,0);
-    backgroundRect.setTexture(&gameBackground);
 
 
 
 
 
 
+    PaddleClass paddle;
+    RectangleShape player = paddle.drawPaddle(paddleTexture);
+    GameBackgroundClass background;
 
     // run the program as long as the window is open
     while (play) {
@@ -41,13 +41,17 @@ int main() {
                 play = false;
                 window.close();
             }
-
+            if(event.type == Event::KeyPressed && (event.key.code == Keyboard::D ||  event.key.code == Keyboard::Right) && player.getPosition().x + player.getSize().x <= window.getSize().x ){
+                player.move(10,0);
+            }
+            if(event.type == Event::KeyPressed && (event.key.code == Keyboard::A  ||  event.key.code == Keyboard::Left) && player.getPosition().x >= 0){
+                player.move(-10,0);
+            }
         }
 
         window.clear();
-        window.draw(backgroundRect);
-        PaddleClass paddle;
-        window.draw(paddle.drawPaddle(paddleTexture));
+        window.draw(background.drawGameBackground(gameBackgroundTexture));
+        window.draw(player);
         window.display();
 
     }
