@@ -4,11 +4,12 @@
 
 using namespace sf;
 
-RectangleShape GameBackgroundClass:: drawGameBackground(Texture &gameBackground){
+void GameBackgroundClass:: drawGameBackground(Texture &gameBackground, RenderWindow &window){
     RectangleShape backgroundRect;
     backgroundRect.setSize(Vector2f (640, 480));
     backgroundRect.setPosition(0,0);
     backgroundRect.setTexture(&gameBackground);
-    return backgroundRect;
+    window.draw(backgroundRect);
+
 }
 

@@ -4,6 +4,6 @@ using namespace sf;
 
 class GameBackgroundClass {
 public:
-    RectangleShape drawGameBackground(Texture &gameBackground);
+    void drawGameBackground(Texture &gameBackground, RenderWindow &window);
 
 };

@@ -1,7 +1,22 @@
 # ninja log v5
-5	1016	7254958191293954	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
-1019	1624	7254953599244721	project.exe	ef6f6a057095a296
-28	5841	7254944867812901	CMakeFiles/project.dir/scripts/Paddle.cpp.obj	34517c1f4123c7ae
-10	854	7254958373243051	CMakeFiles/project.dir/scripts/GameBackGround.cpp.obj	55721b0d579a8151
 4	941	7254958374104545	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
 942	1581	7254958380394637	project.exe	112ddd1a3623bc0d
+10	854	7254958373243051	CMakeFiles/project.dir/scripts/GameBackGround.cpp.obj	55721b0d579a8151
+28	5841	7254944867812901	CMakeFiles/project.dir/scripts/Paddle.cpp.obj	34517c1f4123c7ae
+12	2897	7255749714554336	CMakeFiles/project.dir/scripts/Block.cpp.obj	556cbedab5f63a62
+5	2923	7255749714807949	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+2923	4844	7255749733889434	project.exe	9a8bf46a8749f5d
+11	986	7255752665856847	CMakeFiles/project.dir/scripts/GameBackGround.cpp.obj	55721b0d579a8151
+5	1095	7255752666945279	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+1095	1745	7255752673316744	project.exe	9a8bf46a8749f5d
+11	968	7255754634379604	CMakeFiles/project.dir/scripts/Paddle.cpp.obj	34517c1f4123c7ae
+15	1028	7255754634990790	CMakeFiles/project.dir/scripts/GameBackGround.cpp.obj	55721b0d579a8151
+5	1083	7255754635536013	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+1084	1731	7255754641881258	project.exe	9a8bf46a8749f5d
+4	935	7255754790341896	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+935	1561	7255754796503261	project.exe	9a8bf46a8749f5d
+11	976	7255755222674109	CMakeFiles/project.dir/scripts/Paddle.cpp.obj	34517c1f4123c7ae
+5	1038	7255755223301651	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+1038	1661	7255755229392627	project.exe	9a8bf46a8749f5d
+6	1212	7255759168663186	CMakeFiles/project.dir/main.cpp.obj	684a5653c0d12f27
+1213	1854	7255759174966812	project.exe	9a8bf46a8749f5d
