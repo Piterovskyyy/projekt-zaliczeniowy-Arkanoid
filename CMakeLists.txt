@@ -9,7 +9,9 @@ add_executable(project main.cpp
         scripts/GameBackGround.cpp
         scripts/Block.h
         scripts/Block.h
-        scripts/Block.cpp)
+        scripts/Block.cpp
+        scripts/Ball.h
+        scripts/Ball.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)
