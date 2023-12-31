@@ -68,13 +68,14 @@ int main() {
         return 1;
 
     }
-    Texture blockTexture;
-    if (blockTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 0, 64, 32)) == -1) {
+
+    Texture ballTexture;
+    if (ballTexture.loadFromFile("../images/spritessheet.png", IntRect(232, 0, 22, 22)) == -1) {
         return 1;
 
     }
-    Texture ballTexture;
-    if (ballTexture.loadFromFile("../images/spritessheet.png", IntRect(232, 0, 22, 22)) == -1) {
+    Texture blockTexture;
+    if ( blockTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 0, 64, 32)) == -1) {
         return 1;
 
     }
@@ -87,6 +88,12 @@ int main() {
     RectangleShape ball = ballRect.drawBall(ballTexture);
     int xValocityBall = -4;
     int yValocityBall = -4;
+
+    vector<BlockClass>blocks;
+    for (int i = 0; i < gameLevels[0].size(); i++) {
+        BlockClass Block(gameLevels[0][i].x,gameLevels[0][i].y, blockTexture);
+        blocks.push_back(Block);
+    };
 
     // run the program as long as the window is open
     while (play) {
@@ -118,15 +125,20 @@ int main() {
         if(ball.getGlobalBounds().intersects(player.getGlobalBounds()) == true){
             yValocityBall = -yValocityBall;
         }
+        for(int i = 0; i < blocks.size();i++){
+            if(ball.getGlobalBounds().intersects(blocks[i].drawBlock().getGlobalBounds()) == true){
+                yValocityBall = -yValocityBall;
+                blocks.erase(blocks.begin()+i);
+            }
+        }
 
-        BlockClass Block;
         window.clear();
         background.drawGameBackground(gameBackgroundTexture, window);
         window.draw(player);
         window.draw(ball);
-        for (int i = 0; i < gameLevels[0].size(); i++) {
-            Block.drawBlock(gameLevels[0][i].x, gameLevels[0][i].y, blockTexture, window);
-        };
+        for(int i = 0; i < blocks.size();i++){
+            window.draw(blocks[i].drawBlock());
+        }
 
 
         window.display();

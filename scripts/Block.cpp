@@ -3,12 +3,17 @@
 #include "Block.h"
 
 using namespace sf;
+using namespace std;
 
-void BlockClass::drawBlock(int x, int y, Texture &BlockShape, RenderWindow &window) {
+RectangleShape BlockClass::drawBlock() {
     RectangleShape blockRect;
     blockRect.setSize(Vector2f (64, 32));
     blockRect.setPosition((x*64)+64,(y*32)+32);
-    blockRect.setTexture(&BlockShape);
-    window.draw(blockRect);
+    blockRect.setTexture(&kind);
+    return blockRect;
 }
-
+BlockClass::BlockClass(int setX ,int setY, Texture &setKind){
+    x = setX;
+    y = setY;
+    kind = setKind;
+}

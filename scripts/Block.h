@@ -3,6 +3,12 @@
 using namespace sf;
 
 class BlockClass {
+private:
+    int x;
+    int y;
+    Texture kind;
 public:
-    void drawBlock(int x, int y, Texture &BlockShape, RenderWindow &window);
+    RectangleShape drawBlock();
+    BlockClass(int setX ,int setY, Texture &setKind);
+
 };
