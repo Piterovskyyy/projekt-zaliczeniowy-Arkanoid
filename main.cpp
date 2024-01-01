@@ -6,6 +6,8 @@
 #include "scripts/Block.h"
 #include "scripts/Ball.h"
 #include "vector"
+#include "scripts/Menu.h"
+#include "scripts/Button.h"
 
 using namespace std;
 using namespace sf;
@@ -55,7 +57,7 @@ int main() {
     };
 
 
-    bool play = true;
+    bool play = false;
 
     Event event;
     Texture gameBackgroundTexture;
@@ -79,6 +81,21 @@ int main() {
         return 1;
 
     }
+    Texture menuTexture;
+    if ( menuTexture.loadFromFile("../images/title.png") == -1) {
+        return 1;
+    }
+
+    Texture newGameButtonTexture;
+    if ( newGameButtonTexture.loadFromFile("../images/button-start.png") == -1) {
+        return 1;
+    }
+    Texture settingsButtonTexture;
+    if ( settingsButtonTexture.loadFromFile("../images/button-settings.png") == -1) {
+        return 1;
+    }
+
+
 
 
     PaddleClass paddle;
@@ -95,8 +112,14 @@ int main() {
         blocks.push_back(Block);
     };
 
-    // run the program as long as the window is open
-    while (play) {
+
+
+    MenuClass menu;
+    ButtonClass newGameButton;
+    ButtonClass settingsButton;
+
+
+    while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
 
         while (window.pollEvent(event)) {
@@ -105,43 +128,56 @@ int main() {
                 play = false;
                 window.close();
             }
-            if (event.type == Event::KeyPressed &&
-                (event.key.code == Keyboard::D || event.key.code == Keyboard::Right) &&
-                player.getPosition().x + player.getSize().x <= window.getSize().x) {
-                player.move(10, 0);
+            if(play){
+                if (event.type == Event::KeyPressed &&
+                    (event.key.code == Keyboard::D || event.key.code == Keyboard::Right) &&
+                    player.getPosition().x + player.getSize().x <= window.getSize().x) {
+                    player.move(10, 0);
+                }
+                if (event.type == Event::KeyPressed &&
+                    (event.key.code == Keyboard::A || event.key.code == Keyboard::Left) && player.getPosition().x >= 0) {
+                    player.move(-10, 0);
+                }
             }
-            if (event.type == Event::KeyPressed &&
-                (event.key.code == Keyboard::A || event.key.code == Keyboard::Left) && player.getPosition().x >= 0) {
-                player.move(-10, 0);
+        }
+        if(play){
+            ball.move(xValocityBall, yValocityBall);
+            if (ball.getPosition().x < 0 || ball.getPosition().x > window.getSize().x) {
+                xValocityBall = -xValocityBall;
             }
-        }
-        ball.move(xValocityBall, yValocityBall);
-        if (ball.getPosition().x < 0 || ball.getPosition().x > window.getSize().x) {
-            xValocityBall = -xValocityBall;
-        }
-        if (ball.getPosition().y < 0) {
-            yValocityBall = -yValocityBall;
-        }
-        if(ball.getGlobalBounds().intersects(player.getGlobalBounds()) == true){
-            yValocityBall = -yValocityBall;
-        }
-        for(int i = 0; i < blocks.size();i++){
-            if(ball.getGlobalBounds().intersects(blocks[i].drawBlock().getGlobalBounds()) == true){
+            if (ball.getPosition().y < 0) {
                 yValocityBall = -yValocityBall;
-                blocks.erase(blocks.begin()+i);
             }
+            if(ball.getGlobalBounds().intersects(player.getGlobalBounds()) == true){
+                yValocityBall = -yValocityBall;
+            }
+            for(int i = 0; i < blocks.size();i++){
+                if(ball.getGlobalBounds().intersects(blocks[i].drawBlock().getGlobalBounds()) == true){
+                    yValocityBall = -yValocityBall;
+                    blocks.erase(blocks.begin()+i);
+                }
+            }
+            window.clear();
+            background.drawGameBackground(gameBackgroundTexture, window);
+            window.draw(player);
+            window.draw(ball);
+            for(int i = 0; i < blocks.size();i++){
+                window.draw(blocks[i].drawBlock());
+            }
+
+
+            window.display();
         }
 
-        window.clear();
-        background.drawGameBackground(gameBackgroundTexture, window);
-        window.draw(player);
-        window.draw(ball);
-        for(int i = 0; i < blocks.size();i++){
-            window.draw(blocks[i].drawBlock());
+        if(!play){
+            window.clear();
+            menu.drawMenu(menuTexture,window);
+            newGameButton.drawButton(newGameButtonTexture, window, 250);
+            settingsButton.drawButton(settingsButtonTexture, window, 320);
+            window.display();
+
         }
 
-
-        window.display();
 
 
     }

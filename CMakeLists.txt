@@ -11,7 +11,11 @@ add_executable(project main.cpp
         scripts/Block.h
         scripts/Block.cpp
         scripts/Ball.h
-        scripts/Ball.cpp)
+        scripts/Ball.cpp
+        scripts/Menu.cpp
+        scripts/Menu.h
+        scripts/Button.h
+        scripts/Button.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)
