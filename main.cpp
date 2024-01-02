@@ -57,8 +57,10 @@ int main() {
     };
 
 
-    bool play = false;
-
+    bool isUserInGame = false;
+    bool isUserInMenu = true;
+    bool newGameButtonIsHover = false;
+    bool settingsButtonIsHover = false;
     Event event;
     Texture gameBackgroundTexture;
     if (gameBackgroundTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 33, 800, 450)) == -1) {
@@ -90,8 +92,16 @@ int main() {
     if ( newGameButtonTexture.loadFromFile("../images/button-start.png") == -1) {
         return 1;
     }
+    Texture newGameButtonHoverTexture;
+    if ( newGameButtonHoverTexture.loadFromFile("../images/button-start-hover.png") == -1) {
+        return 1;
+    }
     Texture settingsButtonTexture;
     if ( settingsButtonTexture.loadFromFile("../images/button-settings.png") == -1) {
+        return 1;
+    }
+    Texture settingsButtonHoverTexture;
+    if ( settingsButtonHoverTexture.loadFromFile("../images/button-settings-hover.png") == -1) {
         return 1;
     }
 
@@ -121,14 +131,59 @@ int main() {
 
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
-
+        RectangleShape newGameButtonShape =  newGameButton.drawButton(newGameButtonTexture, 250);
+        RectangleShape settingsButtonShape = settingsButton.drawButton(settingsButtonTexture, 320);
         while (window.pollEvent(event)) {
             // "close requested" event: we close the window
             if (event.type == Event::Closed) {
-                play = false;
+                isUserInGame = false;
                 window.close();
             }
-            if(play){
+            if(isUserInMenu){
+
+                const int buttonXPosition =  320-62;
+                const int buttonWidth = 124;
+                const int buttonHeight = 60;
+
+                if(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=250 && Mouse::getPosition(window).y<=250+buttonHeight){
+
+                    newGameButtonShape.setTexture(&newGameButtonHoverTexture);
+                    newGameButtonIsHover = true;
+                    window.clear();
+                    menu.drawMenu(menuTexture,window);
+                    window.draw(newGameButtonShape);
+                    window.draw(settingsButtonShape);
+                    window.display();
+                    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
+                        cout<<"new Game" <<endl;
+                    }
+
+                }
+                if(!(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=250 && Mouse::getPosition(window).y<=250+buttonHeight)){
+                    newGameButtonIsHover = false;
+
+                }
+
+
+                if(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=320 && Mouse::getPosition(window).y<=320+buttonHeight){
+                    settingsButtonShape.setTexture(&settingsButtonHoverTexture);
+                    settingsButtonIsHover = true;
+                    window.clear();
+                    menu.drawMenu(menuTexture,window);
+                    window.draw(newGameButtonShape);
+                    window.draw(settingsButtonShape);
+                    window.display();
+                    if(event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left ){
+                        cout<< "settings" <<endl;
+                    }
+                }
+                if(!(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=320 && Mouse::getPosition(window).y<=320+buttonHeight)){
+                    settingsButtonIsHover = false;
+                }
+
+            }
+
+            if(isUserInGame){
                 if (event.type == Event::KeyPressed &&
                     (event.key.code == Keyboard::D || event.key.code == Keyboard::Right) &&
                     player.getPosition().x + player.getSize().x <= window.getSize().x) {
@@ -140,7 +195,11 @@ int main() {
                 }
             }
         }
-        if(play){
+
+
+
+
+        if(isUserInGame ){
             ball.move(xValocityBall, yValocityBall);
             if (ball.getPosition().x < 0 || ball.getPosition().x > window.getSize().x) {
                 xValocityBall = -xValocityBall;
@@ -169,13 +228,13 @@ int main() {
             window.display();
         }
 
-        if(!play){
+        if(isUserInMenu && !newGameButtonIsHover && !settingsButtonIsHover){
             window.clear();
             menu.drawMenu(menuTexture,window);
-            newGameButton.drawButton(newGameButtonTexture, window, 250);
-            settingsButton.drawButton(settingsButtonTexture, window, 320);
+            window.draw(newGameButtonShape);
+            window.draw(settingsButtonShape);
             window.display();
-
+//
         }
 
 

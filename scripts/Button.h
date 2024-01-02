@@ -4,6 +4,6 @@ using namespace sf;
 
 class ButtonClass {
 public:
-    void drawButton(Texture &button, RenderWindow &window, int y);
+    RectangleShape drawButton(Texture &button, int y);
 
 };
