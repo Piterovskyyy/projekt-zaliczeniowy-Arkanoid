@@ -15,7 +15,9 @@ add_executable(project main.cpp
         scripts/Menu.cpp
         scripts/Menu.h
         scripts/Button.h
-        scripts/Button.cpp)
+        scripts/Button.cpp
+        scripts/HoverAndClickMainMenuButtons.h
+        scripts/HoverAndClickMainMenuButtons.cpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)

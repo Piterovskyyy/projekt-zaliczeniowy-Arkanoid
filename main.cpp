@@ -8,6 +8,7 @@
 #include "vector"
 #include "scripts/Menu.h"
 #include "scripts/Button.h"
+#include "scripts/HoverAndClickMainMenuButtons.h"
 
 using namespace std;
 using namespace sf;
@@ -139,48 +140,9 @@ int main() {
                 isUserInGame = false;
                 window.close();
             }
-            if(isUserInMenu){
-
-                const int buttonXPosition =  320-62;
-                const int buttonWidth = 124;
-                const int buttonHeight = 60;
-
-                if(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=250 && Mouse::getPosition(window).y<=250+buttonHeight){
-
-                    newGameButtonShape.setTexture(&newGameButtonHoverTexture);
-                    newGameButtonIsHover = true;
-                    window.clear();
-                    menu.drawMenu(menuTexture,window);
-                    window.draw(newGameButtonShape);
-                    window.draw(settingsButtonShape);
-                    window.display();
-                    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
-                        cout<<"new Game" <<endl;
-                    }
-
-                }
-                if(!(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=250 && Mouse::getPosition(window).y<=250+buttonHeight)){
-                    newGameButtonIsHover = false;
-
-                }
-
-
-                if(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=320 && Mouse::getPosition(window).y<=320+buttonHeight){
-                    settingsButtonShape.setTexture(&settingsButtonHoverTexture);
-                    settingsButtonIsHover = true;
-                    window.clear();
-                    menu.drawMenu(menuTexture,window);
-                    window.draw(newGameButtonShape);
-                    window.draw(settingsButtonShape);
-                    window.display();
-                    if(event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left ){
-                        cout<< "settings" <<endl;
-                    }
-                }
-                if(!(Mouse::getPosition(window).x >= buttonXPosition && Mouse::getPosition(window).x <= buttonXPosition + buttonWidth && Mouse::getPosition(window).y>=320 && Mouse::getPosition(window).y<=320+buttonHeight)){
-                    settingsButtonIsHover = false;
-                }
-
+            if(isUserInMenu && (event.type == Event::MouseMoved || (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left))){
+                HoverAndClickMainMenuButtons(window,event,250,menuTexture,newGameButtonShape,newGameButtonHoverTexture,newGameButtonIsHover,settingsButtonShape);
+                HoverAndClickMainMenuButtons(window,event,320,menuTexture,settingsButtonShape,settingsButtonHoverTexture,settingsButtonIsHover,newGameButtonShape);
             }
 
             if(isUserInGame){
