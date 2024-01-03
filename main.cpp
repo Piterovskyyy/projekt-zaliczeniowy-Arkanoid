@@ -9,6 +9,7 @@
 #include "scripts/Menu.h"
 #include "scripts/Button.h"
 #include "scripts/HoverAndClickMainMenuButtons.h"
+#include "scripts/LevelSelect.h"
 
 using namespace std;
 using namespace sf;
@@ -57,9 +58,13 @@ int main() {
             }
     };
 
-
-    bool isUserInGame = false;
     bool isUserInMenu = true;
+    bool isUserInLevelSelect = false;
+    bool isUserInSettings = false;
+    bool isUserInGame = false;
+
+
+
     bool newGameButtonIsHover = false;
     bool settingsButtonIsHover = false;
     Event event;
@@ -77,7 +82,6 @@ int main() {
     Texture ballTexture;
     if (ballTexture.loadFromFile("../images/spritessheet.png", IntRect(232, 0, 22, 22)) == -1) {
         return 1;
-
     }
     Texture blockTexture;
     if ( blockTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 0, 64, 32)) == -1) {
@@ -86,6 +90,10 @@ int main() {
     }
     Texture menuTexture;
     if ( menuTexture.loadFromFile("../images/title.png") == -1) {
+        return 1;
+    }
+    Texture levelSelectTexture;
+    if ( levelSelectTexture.loadFromFile("../images/levelselectscreen.png") == -1) {
         return 1;
     }
 
@@ -128,6 +136,7 @@ int main() {
     MenuClass menu;
     ButtonClass newGameButton;
     ButtonClass settingsButton;
+    LevelSelectClass levelSelect;
 
 
     while (window.isOpen()) {
@@ -137,12 +146,11 @@ int main() {
         while (window.pollEvent(event)) {
             // "close requested" event: we close the window
             if (event.type == Event::Closed) {
-                isUserInGame = false;
                 window.close();
             }
-            if(isUserInMenu && (event.type == Event::MouseMoved || (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left))){
-                HoverAndClickMainMenuButtons(window,event,250,menuTexture,newGameButtonShape,newGameButtonHoverTexture,newGameButtonIsHover,settingsButtonShape);
-                HoverAndClickMainMenuButtons(window,event,320,menuTexture,settingsButtonShape,settingsButtonHoverTexture,settingsButtonIsHover,newGameButtonShape);
+            if(isUserInMenu && !isUserInLevelSelect && (event.type == Event::MouseMoved || (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left))){
+                HoverAndClickMainMenuButtons(window,event,250,menuTexture,newGameButtonShape,newGameButtonHoverTexture,newGameButtonIsHover,settingsButtonShape, isUserInLevelSelect);
+                HoverAndClickMainMenuButtons(window,event,320,menuTexture,settingsButtonShape,settingsButtonHoverTexture,settingsButtonIsHover,newGameButtonShape, isUserInSettings);
             }
 
             if(isUserInGame){
@@ -190,16 +198,25 @@ int main() {
             window.display();
         }
 
-        if(isUserInMenu && !newGameButtonIsHover && !settingsButtonIsHover){
+
+
+        if(isUserInMenu && !newGameButtonIsHover && !settingsButtonIsHover && !isUserInLevelSelect){
             window.clear();
             menu.drawMenu(menuTexture,window);
             window.draw(newGameButtonShape);
             window.draw(settingsButtonShape);
             window.display();
-//
+
         }
 
-
+        if(isUserInLevelSelect){
+            if(isUserInMenu){
+                isUserInMenu = false;
+            }
+            window.clear();
+            levelSelect.drawLevelSelect(levelSelectTexture,window);
+            window.display();
+        }
 
     }
 

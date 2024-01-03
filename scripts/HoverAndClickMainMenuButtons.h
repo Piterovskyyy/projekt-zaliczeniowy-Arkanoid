@@ -4,4 +4,4 @@
 
 
 using namespace sf;
-void HoverAndClickMainMenuButtons(RenderWindow &window, Event &event,int y, Texture &menuTexture, RectangleShape &buttonShape,Texture &buttonHoverTexture, bool &buttonIsHover,RectangleShape &secendButtonShape);
+void HoverAndClickMainMenuButtons(RenderWindow &window, Event &event,int y, Texture &menuTexture, RectangleShape &buttonShape,Texture &buttonHoverTexture, bool &buttonIsHover,RectangleShape &secendButtonShape, bool &changeState);

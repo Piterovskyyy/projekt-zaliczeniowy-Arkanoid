@@ -5,7 +5,7 @@
 #include "Menu.h"
 using namespace sf;
 using namespace std;
-void HoverAndClickMainMenuButtons(RenderWindow &window, Event &event,int y,Texture &menuTexture, RectangleShape &buttonShape,Texture &buttonHoverTexture, bool &buttonIsHover,RectangleShape &secendButtonShape){
+void HoverAndClickMainMenuButtons(RenderWindow &window, Event &event,int y,Texture &menuTexture, RectangleShape &buttonShape,Texture &buttonHoverTexture, bool &buttonIsHover,RectangleShape &secendButtonShape, bool &changeState){
     const int buttonXPosition =  320-62;
     const int buttonWidth = 124;
     const int buttonHeight = 60;
@@ -20,7 +20,7 @@ void HoverAndClickMainMenuButtons(RenderWindow &window, Event &event,int y,Textu
         window.draw(secendButtonShape);
         window.display();
         if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
-            cout<<"123" <<endl;
+            changeState = true;
         }
 
     }
