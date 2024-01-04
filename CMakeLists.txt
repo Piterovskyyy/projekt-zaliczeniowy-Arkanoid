@@ -19,7 +19,10 @@ add_executable(project main.cpp
         scripts/HoverAndClickMainMenuButtons.h
         scripts/HoverAndClickMainMenuButtons.cpp
         scripts/LevelSelect.h
-        scripts/LevelSelect.cpp)
+        scripts/LevelSelect.cpp
+        scripts/HoverAndClickLevelSelectButtons.cpp
+        scripts/HoverAndClickLevelSelectButtons.h
+)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR C:/SFML/lib/cmake/SFML)

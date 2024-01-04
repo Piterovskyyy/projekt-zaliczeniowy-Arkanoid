@@ -10,6 +10,7 @@
 #include "scripts/Button.h"
 #include "scripts/HoverAndClickMainMenuButtons.h"
 #include "scripts/LevelSelect.h"
+#include "scripts/HoverAndClickLevelSelectButtons.h"
 
 using namespace std;
 using namespace sf;
@@ -67,6 +68,8 @@ int main() {
 
     bool newGameButtonIsHover = false;
     bool settingsButtonIsHover = false;
+    bool level1SelectButtonIsHover = false;
+    bool level2SelectButtonIsHover = false;
     Event event;
     Texture gameBackgroundTexture;
     if (gameBackgroundTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 33, 800, 450)) == -1) {
@@ -113,7 +116,10 @@ int main() {
     if ( settingsButtonHoverTexture.loadFromFile("../images/button-settings-hover.png") == -1) {
         return 1;
     }
-
+    Texture levelButtonTexture;
+    if ( levelButtonTexture.loadFromFile("../images/levelicon.png") == -1) {
+        return 1;
+    }
 
 
 
@@ -152,6 +158,13 @@ int main() {
                 HoverAndClickMainMenuButtons(window,event,250,menuTexture,newGameButtonShape,newGameButtonHoverTexture,newGameButtonIsHover,settingsButtonShape, isUserInLevelSelect);
                 HoverAndClickMainMenuButtons(window,event,320,menuTexture,settingsButtonShape,settingsButtonHoverTexture,settingsButtonIsHover,newGameButtonShape, isUserInSettings);
             }
+
+            if(isUserInLevelSelect && (event.type == Event::MouseMoved || (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left))){
+
+                HoverAndClickLevelSelectButtons(window,event,130,level1SelectButtonIsHover,"1");
+                HoverAndClickLevelSelectButtons(window,event,200,level2SelectButtonIsHover,"2");
+            }
+
 
             if(isUserInGame){
                 if (event.type == Event::KeyPressed &&
@@ -209,12 +222,13 @@ int main() {
 
         }
 
-        if(isUserInLevelSelect){
+        if(isUserInLevelSelect && !level1SelectButtonIsHover && !level2SelectButtonIsHover){
             if(isUserInMenu){
                 isUserInMenu = false;
             }
             window.clear();
-            levelSelect.drawLevelSelect(levelSelectTexture,window);
+            levelSelect.drawLevelSelect(levelSelectTexture,window, levelButtonTexture);
+
             window.display();
         }
 
