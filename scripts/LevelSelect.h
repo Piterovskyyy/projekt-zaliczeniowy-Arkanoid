@@ -4,6 +4,6 @@ using namespace sf;
 
 class LevelSelectClass {
 public:
-    void drawLevelSelect(Texture &levelSelectTexture, RenderWindow &window, Texture &levelButtonTexture);
+    void drawLevelSelect(Texture &levelSelectTexture, RenderWindow &window, Texture &levelButtonTexture, int &numberOfComplatedLevel);
 
 };

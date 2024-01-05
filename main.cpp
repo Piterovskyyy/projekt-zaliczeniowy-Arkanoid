@@ -70,6 +70,7 @@ int main() {
     bool settingsButtonIsHover = false;
     bool level1SelectButtonIsHover = false;
     bool level2SelectButtonIsHover = false;
+    int numberOfCompletedLevels = 0;
     Event event;
     Texture gameBackgroundTexture;
     if (gameBackgroundTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 33, 800, 450)) == -1) {
@@ -162,7 +163,9 @@ int main() {
             if(isUserInLevelSelect && (event.type == Event::MouseMoved || (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left))){
 
                 HoverAndClickLevelSelectButtons(window,event,130,level1SelectButtonIsHover,"1");
-                HoverAndClickLevelSelectButtons(window,event,200,level2SelectButtonIsHover,"2");
+                if(numberOfCompletedLevels > 0){
+                    HoverAndClickLevelSelectButtons(window,event,200,level2SelectButtonIsHover,"2");
+                }
             }
 
 
@@ -227,7 +230,7 @@ int main() {
                 isUserInMenu = false;
             }
             window.clear();
-            levelSelect.drawLevelSelect(levelSelectTexture,window, levelButtonTexture);
+            levelSelect.drawLevelSelect(levelSelectTexture,window, levelButtonTexture,numberOfCompletedLevels);
 
             window.display();
         }
