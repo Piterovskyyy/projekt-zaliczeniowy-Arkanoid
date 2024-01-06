@@ -22,6 +22,8 @@ add_executable(project main.cpp
         scripts/LevelSelect.cpp
         scripts/HoverAndClickLevelSelectButtons.cpp
         scripts/HoverAndClickLevelSelectButtons.h
+        scripts/showResultScreen.cpp
+        scripts/showResultScreen.h
 )
 
 set(SFML_STATIC_LIBRARIES TRUE)

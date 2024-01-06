@@ -7,7 +7,7 @@
 using namespace sf;
 using namespace std;
 
-void HoverAndClickLevelSelectButtons(RenderWindow &window, Event &event, int x, bool &LevelSelectButtonIsHover, string levelNumberString) {
+void HoverAndClickLevelSelectButtons(RenderWindow &window, Event &event, int x, bool &LevelSelectButtonIsHover, string levelNumberString, bool &userInGame, int &selectedLevel) {
     const int buttonYPosition = 130;
     const int buttonWidth = 50;
     const int buttonHeight = 50;
@@ -33,6 +33,10 @@ void HoverAndClickLevelSelectButtons(RenderWindow &window, Event &event, int x, 
         window.draw(levelButtonHoverRect);
         window.draw(levelNumber);
         window.display();
+        if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
+            selectedLevel = stoi(levelNumberString);
+            userInGame = true;
+        }
 
     }
 

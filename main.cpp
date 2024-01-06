@@ -11,6 +11,7 @@
 #include "scripts/HoverAndClickMainMenuButtons.h"
 #include "scripts/LevelSelect.h"
 #include "scripts/HoverAndClickLevelSelectButtons.h"
+#include "scripts/showResultScreen.h"
 
 using namespace std;
 using namespace sf;
@@ -132,14 +133,13 @@ int main() {
     int xValocityBall = -4;
     int yValocityBall = -4;
 
+
     vector<BlockClass>blocks;
-    for (int i = 0; i < gameLevels[0].size(); i++) {
-        BlockClass Block(gameLevels[0][i].x,gameLevels[0][i].y, blockTexture);
-        blocks.push_back(Block);
-    };
 
-
-
+    int selectedLevel = 0;
+    bool createBorad = true;
+    int numberOfBlocks;
+    bool userLost = false;
     MenuClass menu;
     ButtonClass newGameButton;
     ButtonClass settingsButton;
@@ -160,11 +160,11 @@ int main() {
                 HoverAndClickMainMenuButtons(window,event,320,menuTexture,settingsButtonShape,settingsButtonHoverTexture,settingsButtonIsHover,newGameButtonShape, isUserInSettings);
             }
 
-            if(isUserInLevelSelect && (event.type == Event::MouseMoved || (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left))){
+            if(isUserInLevelSelect && !isUserInGame && (event.type == Event::MouseMoved || (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left))){
 
-                HoverAndClickLevelSelectButtons(window,event,130,level1SelectButtonIsHover,"1");
+                HoverAndClickLevelSelectButtons(window,event,130,level1SelectButtonIsHover,"1", isUserInGame, selectedLevel);
                 if(numberOfCompletedLevels > 0){
-                    HoverAndClickLevelSelectButtons(window,event,200,level2SelectButtonIsHover,"2");
+                    HoverAndClickLevelSelectButtons(window,event,200,level2SelectButtonIsHover,"2", isUserInGame, selectedLevel);
                 }
             }
 
@@ -186,32 +186,55 @@ int main() {
 
 
         if(isUserInGame ){
-            ball.move(xValocityBall, yValocityBall);
+            if(createBorad) {
+                blocks.clear();
+                for (int i = 0; i < gameLevels[selectedLevel-1].size(); i++) {
+                    BlockClass Block(gameLevels[selectedLevel-1][i].x, gameLevels[selectedLevel-1][i].y, blockTexture);
+                    blocks.push_back(Block);
+                };
+                numberOfBlocks = blocks.size();
+                createBorad = false;
+            }
+
+            if(numberOfBlocks > 0 && !userLost) {
             if (ball.getPosition().x < 0 || ball.getPosition().x > window.getSize().x) {
                 xValocityBall = -xValocityBall;
             }
             if (ball.getPosition().y < 0) {
                 yValocityBall = -yValocityBall;
             }
+            if (ball.getPosition().y >=  window.getSize().y) {
+                    userLost = true;
+                }
+
             if(ball.getGlobalBounds().intersects(player.getGlobalBounds()) == true){
                 yValocityBall = -yValocityBall;
             }
             for(int i = 0; i < blocks.size();i++){
                 if(ball.getGlobalBounds().intersects(blocks[i].drawBlock().getGlobalBounds()) == true){
+
                     yValocityBall = -yValocityBall;
                     blocks.erase(blocks.begin()+i);
+                    numberOfBlocks--;
                 }
             }
-            window.clear();
-            background.drawGameBackground(gameBackgroundTexture, window);
-            window.draw(player);
-            window.draw(ball);
-            for(int i = 0; i < blocks.size();i++){
-                window.draw(blocks[i].drawBlock());
+            ball.move(xValocityBall, yValocityBall);
+
+
+
+                window.clear();
+                background.drawGameBackground(gameBackgroundTexture, window);
+                window.draw(player);
+                window.draw(ball);
+                for (int i = 0; i < blocks.size(); i++) {
+                    window.draw(blocks[i].drawBlock());
+                }
+
+
+                window.display();
+            }else{
+                showResultScreen(window,userLost);
             }
-
-
-            window.display();
         }
 
 
@@ -225,7 +248,7 @@ int main() {
 
         }
 
-        if(isUserInLevelSelect && !level1SelectButtonIsHover && !level2SelectButtonIsHover){
+        if(isUserInLevelSelect && !level1SelectButtonIsHover && !level2SelectButtonIsHover && !isUserInGame){
             if(isUserInMenu){
                 isUserInMenu = false;
             }

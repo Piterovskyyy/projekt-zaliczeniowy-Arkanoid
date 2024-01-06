@@ -5,4 +5,4 @@
 
 using namespace sf;
 using  namespace std;
-void  HoverAndClickLevelSelectButtons(RenderWindow &window, Event &event,int x, bool &LevelSelectButtonIsHover, string levelNumberString);
+void  HoverAndClickLevelSelectButtons(RenderWindow &window, Event &event,int x, bool &LevelSelectButtonIsHover, string levelNumberString, bool &userInGame, int &selectedLevel);
