@@ -3,7 +3,7 @@
 
 
 using namespace sf;
-void showResultScreen(RenderWindow &window, bool userWon){
+void showResultScreen(RenderWindow &window, bool userWon, int &completedLevels){
     Texture ResultTexture;
     Font font;
     font.loadFromFile("../fonts/RubikDoodleShadow-Regular.ttf");
@@ -16,6 +16,7 @@ void showResultScreen(RenderWindow &window, bool userWon){
         ResultTexture.loadFromFile("../images/result-screen-win.png");
         text.setString("Wygrales!");
         text.setPosition(260,200);
+        completedLevels++;
     }else{
         ResultTexture.loadFromFile("../images/result-screen-lose.png");
         text.setString("Przegrales!");

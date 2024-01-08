@@ -10,7 +10,7 @@ void showRestartLevelButton(RenderWindow &window, Texture &buttonRestartTexture)
     buttonRestartRect.setTexture(&buttonRestartTexture);
     window.draw(buttonRestartRect);
 };
-void hoverAndClickRestartLevelButton(RenderWindow &window, Event &event, bool &buttonRestartLevelIsHover){
+void hoverAndClickRestartLevelButton(RenderWindow &window, Event &event, bool &buttonRestartLevelIsHover , bool &userLost, bool &createBoard){
     const int buttonYPosition = 300;
     const int buttonWidth = 50;
     const int buttonHeight = 50;
@@ -18,6 +18,11 @@ void hoverAndClickRestartLevelButton(RenderWindow &window, Event &event, bool &b
         Mouse::getPosition(window).y >= buttonYPosition &&
         Mouse::getPosition(window).y <= buttonYPosition + buttonHeight){
         buttonRestartLevelIsHover = true;
+
+        if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
+            userLost = false;
+            createBoard = true;
+        }
     }
     if(!(Mouse::getPosition(window).x >= 340 && Mouse::getPosition(window).x <= 340 + buttonWidth &&
          Mouse::getPosition(window).y >= buttonYPosition &&

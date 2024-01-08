@@ -11,7 +11,7 @@ void showBackToLevelsButton(RenderWindow &window, Texture &buttonTexture){
     window.draw(buttonBackToLevelsRect);
 
 };
-void hoverAndClickBackToLevelsButton(RenderWindow &window, Event &event, bool &buttonBackToLevelsIsHover){
+void hoverAndClickBackToLevelsButton(RenderWindow &window, Event &event, bool &buttonBackToLevelsIsHover, bool &isUserInLevelSelect, bool &isUserInGame){
     const int buttonYPosition = 300;
     const int buttonWidth = 50;
     const int buttonHeight = 50;
@@ -19,6 +19,10 @@ void hoverAndClickBackToLevelsButton(RenderWindow &window, Event &event, bool &b
         Mouse::getPosition(window).y >= buttonYPosition &&
         Mouse::getPosition(window).y <= buttonYPosition + buttonHeight){
         buttonBackToLevelsIsHover = true;
+        if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
+            isUserInLevelSelect = true;
+            isUserInGame = false;
+        }
     }
     if(!(Mouse::getPosition(window).x >= 250 && Mouse::getPosition(window).x <= 250 + buttonWidth &&
          Mouse::getPosition(window).y >= buttonYPosition &&

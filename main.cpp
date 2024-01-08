@@ -197,8 +197,8 @@ int main() {
                     if(event.type == Event::MouseMoved ||
                        (event.type == Event::MouseButtonPressed &&
                         event.mouseButton.button == Mouse::Left)){
-                        hoverAndClickBackToLevelsButton(window,event,buttonBackToLevelsIsHover);
-                        hoverAndClickRestartLevelButton(window,event,buttonRestartLevelIsHover);
+                        hoverAndClickBackToLevelsButton(window,event,buttonBackToLevelsIsHover, isUserInLevelSelect, isUserInGame);
+                        hoverAndClickRestartLevelButton(window,event,buttonRestartLevelIsHover, userLost, createBorad);
                     }
                 }
             }
@@ -214,6 +214,10 @@ int main() {
                     blocks.push_back(Block);
                 };
                 numberOfBlocks = blocks.size();
+                ball.setPosition(320-11,480-22-23);
+                yValocityBall = -4;
+                xValocityBall = -4;
+                player.setPosition(320-51,480-23);
                 createBorad = false;
             }
 
@@ -260,7 +264,7 @@ int main() {
                 for (int i = 0; i < blocks.size(); i++) {
                     window.draw(blocks[i].drawBlock());
                 }
-                showResultScreen(window, !userLost);
+                showResultScreen(window, !userLost,numberOfCompletedLevels);
                 Texture buttonExitTexture;
                 Texture buttonRestartTexture;
                 if(buttonBackToLevelsIsHover){
@@ -293,6 +297,8 @@ int main() {
             if (isUserInMenu) {
                 isUserInMenu = false;
             }
+            userLost = false;
+            createBorad = true;
             window.clear();
             levelSelect.drawLevelSelect(levelSelectTexture, window, levelButtonTexture, numberOfCompletedLevels);
 

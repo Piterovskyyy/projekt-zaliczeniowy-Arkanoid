@@ -4,4 +4,4 @@
 
 using namespace sf;
 void showRestartLevelButton(RenderWindow &window, Texture &buttonRestartTexture);
-void hoverAndClickRestartLevelButton(RenderWindow &window, Event &event, bool &buttonRestartLevelIsHover);
+void hoverAndClickRestartLevelButton(RenderWindow &window, Event &event, bool &buttonRestartLevelIsHover,bool &userLost, bool &createBoard);

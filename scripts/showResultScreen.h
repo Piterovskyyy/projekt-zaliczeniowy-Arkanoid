@@ -3,4 +3,4 @@
 
 
 using namespace sf;
-void showResultScreen(RenderWindow &window, bool userWon);
+void showResultScreen(RenderWindow &window, bool userWon, int &completedLevels);
