@@ -6,9 +6,13 @@ class BlockClass {
 private:
     int x;
     int y;
-    Texture kind;
+    Texture kindTexture;
+    int kind;
 public:
     RectangleShape drawBlock();
-    BlockClass(int setX ,int setY, Texture &setKind);
+    BlockClass(int setX ,int setY, Texture &setKindTexture, int setKind);
+    int getKind();
+    int getX();
+    int getY();
 
 };

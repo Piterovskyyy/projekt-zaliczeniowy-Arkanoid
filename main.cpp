@@ -74,7 +74,7 @@ int main() {
     bool level2SelectButtonIsHover = false;
     bool buttonBackToLevelsIsHover = false;
     bool buttonRestartLevelIsHover = false;
-    int numberOfCompletedLevels = 0;
+    int numberOfCompletedLevels = 1;
     Event event;
     Texture gameBackgroundTexture;
     if (gameBackgroundTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 33, 800, 450)) == -1) {
@@ -91,8 +91,13 @@ int main() {
     if (ballTexture.loadFromFile("../images/spritessheet.png", IntRect(232, 0, 22, 22)) == -1) {
         return 1;
     }
-    Texture blockTexture;
-    if (blockTexture.loadFromFile("../images/spritessheet.png", IntRect(0, 0, 64, 32)) == -1) {
+    Texture blockTextureKind0;
+    if (blockTextureKind0.loadFromFile("../images/spritessheet.png", IntRect(0, 0, 64, 32)) == -1) {
+        return 1;
+
+    }
+    Texture blockTextureKind1;
+    if (blockTextureKind1.loadFromFile("../images/spritessheet.png", IntRect(64, 0, 64, 32)) == -1) {
         return 1;
 
     }
@@ -209,8 +214,14 @@ int main() {
             if (createBorad) {
                 blocks.clear();
                 for (int i = 0; i < gameLevels[selectedLevel - 1].size(); i++) {
+                    Texture kindTexture;
+                    if( gameLevels[selectedLevel-1][i].kind == 0){
+                        kindTexture = blockTextureKind0;
+                    }else{
+                        kindTexture = blockTextureKind1;
+                    }
                     BlockClass Block(gameLevels[selectedLevel - 1][i].x, gameLevels[selectedLevel - 1][i].y,
-                                     blockTexture);
+                                     kindTexture, gameLevels[selectedLevel - 1][i].kind);
                     blocks.push_back(Block);
                 };
                 numberOfBlocks = blocks.size();
@@ -237,10 +248,17 @@ int main() {
                 }
                 for (int i = 0; i < blocks.size(); i++) {
                     if (ball.getGlobalBounds().intersects(blocks[i].drawBlock().getGlobalBounds()) == true) {
-
+                        if(blocks[i].getKind()==1){
+                            int x = blocks[i].getX();
+                            int y = blocks[i].getY();
+                            BlockClass Block(x, y,
+                                             blockTextureKind0, 0);
+                            blocks[i] = Block;
+                        }else{
+                            blocks.erase(blocks.begin() + i);
+                            numberOfBlocks--;
+                        }
                         yValocityBall = -yValocityBall;
-                        blocks.erase(blocks.begin() + i);
-                        numberOfBlocks--;
                     }
                 }
                 ball.move(xValocityBall, yValocityBall);
