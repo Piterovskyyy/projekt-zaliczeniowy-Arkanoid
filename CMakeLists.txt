@@ -28,6 +28,8 @@ add_executable(project main.cpp
         scripts/showBackToLevelsButton.h
         scripts/showRestartLevelButton.cpp
         scripts/showRestartLevelButton.h
+        scripts/showSettings.cpp
+        scripts/showSettingsScreen.h
 )
 
 set(SFML_STATIC_LIBRARIES TRUE)

@@ -14,6 +14,7 @@
 #include "scripts/showResultScreen.h"
 #include "scripts/showBackToLevelsButton.h"
 #include "scripts/showRestartLevelButton.h"
+#include "scripts/showSettingsScreen.h"
 
 using namespace std;
 using namespace sf;
@@ -137,7 +138,7 @@ int main() {
     GameBackgroundClass background;
     BallClass ballRect;
     RectangleShape ball = ballRect.drawBall(ballTexture);
-    int xValocityBall = -4;
+    int xValocityBall = -5;
     int yValocityBall = -4;
 
 
@@ -162,7 +163,7 @@ int main() {
             if (event.type == Event::Closed) {
                 window.close();
             }
-            if (isUserInMenu && !isUserInLevelSelect && (event.type == Event::MouseMoved ||
+            if (isUserInMenu && !isUserInLevelSelect &&  !isUserInSettings && (event.type == Event::MouseMoved ||
                                                          (event.type == Event::MouseButtonPressed &&
                                                           event.mouseButton.button == Mouse::Left))) {
                 HoverAndClickMainMenuButtons(window, event, 250, menuTexture, newGameButtonShape,
@@ -212,6 +213,8 @@ int main() {
 
         if (isUserInGame) {
             if (createBorad) {
+                xValocityBall = -5;
+                yValocityBall = -4;
                 blocks.clear();
                 for (int i = 0; i < gameLevels[selectedLevel - 1].size(); i++) {
                     Texture kindTexture;
@@ -226,13 +229,11 @@ int main() {
                 };
                 numberOfBlocks = blocks.size();
                 ball.setPosition(320-11,480-22-23);
-                yValocityBall = -4;
-                xValocityBall = -4;
                 player.setPosition(320-51,480-23);
                 createBorad = false;
             }
 
-            if (numberOfBlocks > 0 && !userLost) {
+            if (numberOfBlocks > 0 && !userLost && !createBorad) {
                 if (ball.getPosition().x < 0 || ball.getPosition().x > window.getSize().x) {
                     xValocityBall = -xValocityBall;
                 }
@@ -243,8 +244,13 @@ int main() {
                     userLost = true;
                 }
 
-                if (ball.getGlobalBounds().intersects(player.getGlobalBounds()) == true) {
-                    yValocityBall = -yValocityBall;
+                if (ball.getGlobalBounds().intersects(player.getGlobalBounds()) == true ) {
+                    if(ball.getPosition().y < window.getSize().y - 38){
+                        yValocityBall = -yValocityBall;
+                    }else{
+                        xValocityBall = -xValocityBall;
+                    }
+
                 }
                 for (int i = 0; i < blocks.size(); i++) {
                     if (ball.getGlobalBounds().intersects(blocks[i].drawBlock().getGlobalBounds()) == true) {
@@ -261,6 +267,7 @@ int main() {
                         yValocityBall = -yValocityBall;
                     }
                 }
+
                 ball.move(xValocityBall, yValocityBall);
 
 
@@ -275,6 +282,7 @@ int main() {
 
                 window.display();
             } else {
+
                 window.clear();
                 background.drawGameBackground(gameBackgroundTexture, window);
                 window.draw(player);
@@ -302,7 +310,7 @@ int main() {
         }
 
 
-        if (isUserInMenu && !newGameButtonIsHover && !settingsButtonIsHover && !isUserInLevelSelect) {
+        if (isUserInMenu && !newGameButtonIsHover && !settingsButtonIsHover && !isUserInLevelSelect && !isUserInSettings) {
             window.clear();
             menu.drawMenu(menuTexture, window);
             window.draw(newGameButtonShape);
@@ -322,6 +330,13 @@ int main() {
 
             window.display();
         }
+
+        if(isUserInSettings){
+            window.clear();
+            showSettingsScreen(window);
+            window.display();
+        }
+
 
     }
 
