@@ -15,6 +15,7 @@
 #include "scripts/showBackToLevelsButton.h"
 #include "scripts/showRestartLevelButton.h"
 #include "scripts/showSettingsScreen.h"
+#include "scripts/HoverAndClickSettingsButtons.h"
 
 using namespace std;
 using namespace sf;
@@ -67,6 +68,14 @@ int main() {
     bool isUserInLevelSelect = false;
     bool isUserInSettings = false;
     bool isUserInGame = false;
+
+
+    Texture musicToggleTexture, decreaseMusicValueTexture, increaseMusicValueTexture, leaveButonTexture;
+    bool isMusicToggleButtonHover = false;
+    bool isDecreaseMusicValueButtonHover = false;
+    bool isIncreaseMusicValueButtonHover = false;
+    bool isLeaveButtonHover = false;
+
 
 
     bool newGameButtonIsHover = false;
@@ -208,6 +217,10 @@ int main() {
                     }
                 }
             }
+            if(isUserInSettings){
+                HoverAndClickSettingsButtons(window, event, isLeaveButtonHover, isMusicToggleButtonHover);
+            }
+
         }
 
 
@@ -331,9 +344,38 @@ int main() {
             window.display();
         }
 
+
         if(isUserInSettings){
-            window.clear();
-            showSettingsScreen(window);
+
+            if(isUserInMenu){
+                window.clear();
+            }
+            if(isMusicToggleButtonHover){
+                musicToggleTexture.loadFromFile("../images/button-music-hover.png");
+            }else{
+                musicToggleTexture.loadFromFile("../images/button-music.png");
+            }
+
+            if(isDecreaseMusicValueButtonHover){
+                decreaseMusicValueTexture.loadFromFile("../images/button-minus-hover.png");
+            }else{
+                decreaseMusicValueTexture.loadFromFile("../images/button-minus.png");
+            }
+
+            if(isIncreaseMusicValueButtonHover){
+                increaseMusicValueTexture.loadFromFile("../images/button-plus-hover.png");
+            }else{
+                increaseMusicValueTexture.loadFromFile("../images/button-plus.png");
+            }
+
+            if(isLeaveButtonHover){
+                leaveButonTexture.loadFromFile("../images/button-exit-hover.png");
+            }else{
+                leaveButonTexture.loadFromFile("../images/button-exit.png");
+            }
+
+
+            showSettingsScreen(window, leaveButonTexture, musicToggleTexture, increaseMusicValueTexture, decreaseMusicValueTexture);
             window.display();
         }
 

@@ -3,4 +3,4 @@
 
 
 using namespace sf;
-void showSettingsScreen(RenderWindow &window);
+void showSettingsScreen(RenderWindow &window, Texture &leaveButtonTexture, Texture &musicToggleTexture, Texture &increaseMusicValueTexture, Texture &decreaseMusicValueTexture);
