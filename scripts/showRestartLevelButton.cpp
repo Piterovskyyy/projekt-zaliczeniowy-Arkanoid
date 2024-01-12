@@ -22,6 +22,8 @@ void hoverAndClickRestartLevelButton(RenderWindow &window, Event &event, bool &b
         if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
             userLost = false;
             createBoard = true;
+            Mouse::setPosition(Vector2i(Mouse::getPosition(window).x,Mouse::getPosition(window).y),window);
+            buttonRestartLevelIsHover = false;
         }
     }
     if(!(Mouse::getPosition(window).x >= 340 && Mouse::getPosition(window).x <= 340 + buttonWidth &&

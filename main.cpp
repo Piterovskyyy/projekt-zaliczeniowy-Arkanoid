@@ -218,7 +218,7 @@ int main() {
                 }
             }
             if(isUserInSettings){
-                HoverAndClickSettingsButtons(window, event, isLeaveButtonHover, isMusicToggleButtonHover);
+                HoverAndClickSettingsButtons(window, event, isLeaveButtonHover, isMusicToggleButtonHover, isIncreaseMusicValueButtonHover, isDecreaseMusicValueButtonHover, isUserInSettings);
             }
 
         }

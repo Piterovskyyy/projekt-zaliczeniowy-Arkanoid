@@ -22,6 +22,8 @@ void hoverAndClickBackToLevelsButton(RenderWindow &window, Event &event, bool &b
         if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left){
             isUserInLevelSelect = true;
             isUserInGame = false;
+            Mouse::setPosition(Vector2i(Mouse::getPosition(window).x,Mouse::getPosition(window).y),window);
+            buttonBackToLevelsIsHover = false;
         }
     }
     if(!(Mouse::getPosition(window).x >= 250 && Mouse::getPosition(window).x <= 250 + buttonWidth &&
