@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Audio/Music.hpp>
 #include <iostream>
 #include "scripts/Paddle.h"
 #include "scripts/GameBackGround.h"
@@ -16,6 +18,7 @@
 #include "scripts/showRestartLevelButton.h"
 #include "scripts/showSettingsScreen.h"
 #include "scripts/HoverAndClickSettingsButtons.h"
+
 
 using namespace std;
 using namespace sf;
@@ -141,6 +144,15 @@ int main() {
         return 1;
     }
 
+    Music backgroundMusic;
+    if(!(backgroundMusic.openFromFile("../sounds/music.ogg"))){
+        return 1;
+    }
+    backgroundMusic.play();
+    backgroundMusic.setVolume(50);
+    backgroundMusic.setLoop(true);
+
+
 
     PaddleClass paddle;
     RectangleShape player = paddle.drawPaddle(paddleTexture);
@@ -218,7 +230,7 @@ int main() {
                 }
             }
             if(isUserInSettings){
-                HoverAndClickSettingsButtons(window, event, isLeaveButtonHover, isMusicToggleButtonHover, isIncreaseMusicValueButtonHover, isDecreaseMusicValueButtonHover, isUserInSettings);
+                HoverAndClickSettingsButtons(window, event, isLeaveButtonHover, isMusicToggleButtonHover, isIncreaseMusicValueButtonHover, isDecreaseMusicValueButtonHover, isUserInSettings, backgroundMusic);
             }
 
         }
