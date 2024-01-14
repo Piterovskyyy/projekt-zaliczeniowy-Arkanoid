@@ -48,6 +48,8 @@ void HoverAndClickSettingsButtons(RenderWindow &window, Event &event, bool &isLe
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
             if(bgMusic.getVolume() < 100){
                 bgMusic.setVolume(bgMusic.getVolume()+10);
+            }else{
+                bgMusic.setVolume(100);
             }
         }
     }else{
@@ -61,14 +63,13 @@ void HoverAndClickSettingsButtons(RenderWindow &window, Event &event, bool &isLe
         Mouse::getPosition(window).y <= 100 + buttonHeight){
         isDecreaseMusicButtonHover = true;
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left) {
-            if(bgMusic.getVolume() > 0){
+            if(bgMusic.getVolume() >= 10){
                 cout<< bgMusic.getVolume() <<endl;
-                if(bgMusic.getVolume() == 10){
-                    bgMusic.setVolume(0);
+                bgMusic.setVolume(bgMusic.getVolume()-10);
                 }else{
-                    bgMusic.setVolume(bgMusic.getVolume()-10);
+                    bgMusic.setVolume(0);
                 }
-            }
+
         }
     }else{
         isDecreaseMusicButtonHover = false;
