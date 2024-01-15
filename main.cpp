@@ -25,7 +25,7 @@ using namespace sf;
 
 int main() {
     RenderWindow window(VideoMode(640, 480), "Arkanoid");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(70);
 
     struct BoardItem {
         int x;
